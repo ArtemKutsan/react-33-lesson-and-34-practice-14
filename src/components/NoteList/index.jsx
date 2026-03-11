@@ -10,8 +10,6 @@ function NoteList({ notes, deleteNote, onEdit }) {
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-        marginTop: '1rem',
-        backgroundColor: '#fafafa',
       }}
     >
       {notes.map((note) => (

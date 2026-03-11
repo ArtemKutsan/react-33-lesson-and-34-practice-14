@@ -34,9 +34,9 @@ function NoteForm({ editingNote, addNote, updateNote }) {
       onSubmit={handleSubmit(submitHandler)}
       style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
     >
-      <input type="text" {...register('title')} />
-      <textarea {...register('text')} />
-      <button>{editingNote ? 'Сохранить' : 'Добавить'}</button>
+      <input type="text" placeholder="Введите заголовок заметки..." {...register('title')} />
+      <textarea placeholder="Введите текст заметки..." {...register('text')} />
+      <button className="button-primary">{editingNote ? 'Сохранить' : 'Добавить'}</button>
     </form>
   );
 }

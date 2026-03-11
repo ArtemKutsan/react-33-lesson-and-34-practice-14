@@ -9,6 +9,7 @@ function NoteItem({ note, onDelete, onEdit }) {
         border: '1px solid #c5cae0',
         borderRadius: '1rem',
         padding: '1rem',
+        backgroundColor: '#fafafa',
       }}
     >
       <h4>{note.title}</h4>
