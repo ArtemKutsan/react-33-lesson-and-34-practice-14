@@ -25,7 +25,7 @@ function NotesPage({ notes }) {
           margin: '0 auto',
         }}
       >
-        <h3>Новая аметка</h3>
+        <h3>Новая заметка</h3>
         <NoteForm editingNote={editingNote} />
         {notes.length !== 0 && (
           <>
