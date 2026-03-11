@@ -76,6 +76,7 @@ button,
   justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
+  width: fit-content;
 }
 
 .button-primary {

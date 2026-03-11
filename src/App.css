@@ -621,15 +621,6 @@
   font-size: 0.875rem;
 }
 
-.note-text.completed {
-  text-decoration: line-through;
-  color: var(--text-muted);
-}
-
-.note-text.active {
-  color: var(--text-main);
-}
-
 .note-delete {
   padding: 0.25rem;
   font-size: 1rem;

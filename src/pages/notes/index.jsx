@@ -1,62 +1,45 @@
-import Meta from '../../components/Meta';
+// src/pages/notes/index.jsx
 import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { addNoteAction, deleteNoteAction } from '../../redux/actions/notes';
+import { useState } from 'react';
+import Meta from '../../components/Meta';
+import NoteForm from '../../components/NoteForm';
+import NoteList from '../../components/NoteList';
 
-function NotesPage({ data, addNote, deleteNote }) {
-  const { register, handleSubmit, reset } = useForm();
-
-  const onSubmit = ({ title }) => {
-    const newNote = {
-      id: crypto.randomUUID(),
-      title,
-      completed: false,
-    };
-
-    addNote(newNote);
-    reset();
-  };
+function NotesPage({ notes }) {
+  const [editingNote, setEditingNote] = useState(null);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Meta title="Note" />
+      <Meta title="Notes" />
 
-      <h1>Lesson 33: Реализация интерфейса с React и Redux </h1>
-
+      <h1>Lesson 33: Реализация интерфейса с React и Redux</h1>
       <h2>Задача 1: Notes с Redux</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', gap: '1rem' }}>
-        <input
-          type="text"
-          placeholder="Введите заметку..."
-          {...register('title', { required: true })}
-        />
-        <button type="submit">Добавить</button>
-      </form>
-
-      <div style={{ marginTop: '1rem' }}>
-        {data.map((note) => (
-          <div key={note.id}>
-            <p>
-              {note.title}{' '}
-              <span onClick={() => deleteNote(note.id)} style={{ color: 'red', cursor: 'pointer' }}>
-                x
-              </span>
-            </p>
-          </div>
-        ))}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          maxWidth: '480px',
+          width: '100%',
+          margin: '0 auto',
+        }}
+      >
+        <h3>Новая заметка</h3>
+        <NoteForm editingNote={editingNote} />
+        {notes.length !== 0 && (
+          <>
+            <h3 style={{ marginTop: '1rem' }}>Список заметок</h3>
+            <NoteList onEdit={setEditingNote} />
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  data: state.notes.data,
+  notes: state.notes.data,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  addNote: (note) => dispatch(addNoteAction(note)),
-  deleteNote: (id) => dispatch(deleteNoteAction(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NotesPage);
+export default connect(mapStateToProps, null)(NotesPage);
