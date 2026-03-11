@@ -1,10 +1,11 @@
 // src/pages/notes/index.jsx
+import { connect } from 'react-redux';
+import { useState } from 'react';
 import Meta from '../../components/Meta';
 import NoteForm from '../../components/NoteForm';
 import NoteList from '../../components/NoteList';
-import { useState } from 'react';
 
-function NotesPage() {
+function NotesPage({ notes }) {
   const [editingNote, setEditingNote] = useState(null);
 
   return (
@@ -26,11 +27,19 @@ function NotesPage() {
       >
         <h3>Новая аметка</h3>
         <NoteForm editingNote={editingNote} />
-        <h3 style={{ marginTop: '1rem' }}>Список заметок</h3>
-        <NoteList onEdit={setEditingNote} />
+        {notes.length !== 0 && (
+          <>
+            <h3 style={{ marginTop: '1rem' }}>Список заметок</h3>
+            <NoteList onEdit={setEditingNote} />
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-export default NotesPage;
+const mapStateToProps = (state) => ({
+  notes: state.notes.data,
+});
+
+export default connect(mapStateToProps, null)(NotesPage);
