@@ -1,8 +1,10 @@
 // src/components/NoteForm/index.jsx
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { addNoteAction, updateNoteAction } from '../../redux/actions/notes';
 import { useEffect } from 'react';
 
-function NoteForm({ onSubmit, editingNote }) {
+function NoteForm({ editingNote, addNote, updateNote }) {
   const { register, handleSubmit, reset, setValue } = useForm();
 
   useEffect(() => {
@@ -12,7 +14,7 @@ function NoteForm({ onSubmit, editingNote }) {
     } else {
       reset();
     }
-  }, [editingNote, setValue, reset]);
+  }, [editingNote]);
 
   const submitHandler = (data) => {
     const note = {
@@ -21,7 +23,9 @@ function NoteForm({ onSubmit, editingNote }) {
       text: data.text,
     };
 
-    onSubmit(note);
+    if (editingNote) updateNote(note);
+    else addNote(note);
+
     reset();
   };
 
@@ -30,15 +34,16 @@ function NoteForm({ onSubmit, editingNote }) {
       onSubmit={handleSubmit(submitHandler)}
       style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
     >
-      <input
-        type="text"
-        placeholder="Введите название заметки..."
-        {...register('title', { required: true })}
-      />
-      <textarea placeholder="Введите текст заметки..." {...register('text', { required: true })} />
-      <button type="submit">{editingNote ? 'Сохранить' : 'Добавить'}</button>
+      <input type="text" {...register('title')} />
+      <textarea {...register('text')} />
+      <button>{editingNote ? 'Сохранить' : 'Добавить'}</button>
     </form>
   );
 }
 
-export default NoteForm;
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (note) => dispatch(addNoteAction(note)),
+  updateNote: (note) => dispatch(updateNoteAction(note)),
+});
+
+export default connect(null, mapDispatchToProps)(NoteForm);
