@@ -1,7 +1,7 @@
 // src/components/NoteList/index.jsx
 import NoteItem from '../NoteItem';
 
-function NoteList({ notes, onDelete }) {
+function NoteList({ notes, onDelete, onEdit }) {
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ function NoteList({ notes, onDelete }) {
       }}
     >
       {notes.map((note) => (
-        <NoteItem key={note.id} note={note} onDelete={onDelete} />
+        <NoteItem key={note.id} note={note} onDelete={onDelete} onEdit={onEdit} />
       ))}
     </div>
   );

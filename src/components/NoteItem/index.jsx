@@ -1,5 +1,5 @@
 // src/components/NoteItem/index.jsx
-function NoteItem({ note, onDelete }) {
+function NoteItem({ note, onDelete, onEdit }) {
   return (
     <div
       style={{
@@ -14,7 +14,7 @@ function NoteItem({ note, onDelete }) {
       <h4>{note.title}</h4>
       <p>{note.text}</p>
       <div style={{ display: 'flex', gap: '1rem' }}>
-        <button onClick={() => onEdit(note.id)}>Редактировать</button>
+        <button onClick={() => onEdit(note)}>Редактировать</button>
         <button onClick={() => onDelete(note.id)} style={{ color: 'red' }}>
           Удалить
         </button>

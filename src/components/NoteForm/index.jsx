@@ -1,22 +1,33 @@
 // src/components/NoteForm/index.jsx
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
-function NoteForm({ onAdd }) {
-  const { register, handleSubmit, reset } = useForm();
+function NoteForm({ onSubmit, editingNote }) {
+  const { register, handleSubmit, reset, setValue } = useForm();
 
-  const onSubmit = ({ title, text }) => {
-    onAdd({
-      id: crypto.randomUUID(),
-      title,
-      text,
-    });
+  useEffect(() => {
+    if (editingNote) {
+      setValue('title', editingNote.title);
+      setValue('text', editingNote.text);
+    } else {
+      reset();
+    }
+  }, [editingNote, setValue, reset]);
 
+  const submitHandler = (data) => {
+    const note = {
+      id: editingNote?.id ?? crypto.randomUUID(),
+      title: data.title,
+      text: data.text,
+    };
+
+    onSubmit(note);
     reset();
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(submitHandler)}
       style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
     >
       <input
@@ -25,9 +36,7 @@ function NoteForm({ onAdd }) {
         {...register('title', { required: true })}
       />
       <textarea placeholder="Введите текст заметки..." {...register('text', { required: true })} />
-      <button type="submit" className="button-primary" style={{ margin: '0 auto' }}>
-        'Добавить'
-      </button>
+      <button type="submit">{editingNote ? 'Сохранить' : 'Добавить'}</button>
     </form>
   );
 }

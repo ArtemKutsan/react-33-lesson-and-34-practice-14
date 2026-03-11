@@ -11,3 +11,8 @@ export const deleteNoteAction = (id) => {
     payload: id,
   };
 };
+
+export const updateNoteAction = (note) => ({
+  type: 'UPDATE_NOTE',
+  payload: note,
+});
